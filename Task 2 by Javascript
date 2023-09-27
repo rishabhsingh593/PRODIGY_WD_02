@@ -1,0 +1,24 @@
+// JavaScript code in a separate script.js file or within a <script> tag
+
+const header = document.querySelector('header');
+const navLinks = document.querySelectorAll('nav a');
+
+// Function to change the header background color when scrolled
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.style.backgroundColor = '#555'; // Change to your desired color
+    } else {
+        header.style.backgroundColor = '#333'; // Reset to the original color
+    }
+});
+
+// Function to change the link color when hovered
+navLinks.forEach((link) => {
+    link.addEventListener('mouseenter', () => {
+        link.style.color = '#ff9900'; // Change to your desired color
+    });
+
+    link.addEventListener('mouseleave', () => {
+        link.style.color = '#fff'; // Reset to the original color
+    });
+});
