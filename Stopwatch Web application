@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stopwatch</title>
+<style>
+    .container {
+        text-align: center;
+        padding-top: 100px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Stopwatch</h1>
+    <h2 id="display">00:00:00</h2>
+    <button onclick="startPause()">Start</button>
+    <button onclick="lap()">Lap</button>
+    <button onclick="reset()">Reset</button>
+    <ul id="laps"></ul>
+</div>
+
+<script>
+    let milliseconds = 0;
+    let timer;
+    let laps = [];
+
+    function displayTime() {
+        let date = new Date(milliseconds);
+        document.getElementById('display').innerHTML = date.toISOString().substr(11, 8);
+    }
+
+    function startPause() {
+        if (!timer) {
+            timer = setInterval(function () {
+                milliseconds += 1000;
+                displayTime();
+            }, 1000);
+            document.querySelector('button:nth-of-type(1)').innerHTML = 'Pause';
+        } else {
+            clearInterval(timer);
+            timer = null;
+            document.querySelector('button:nth-of-type(1)').innerHTML = 'Start';
+        }
+    }
+
+    function lap() {
+        if (timer) {
+            laps.push(milliseconds);
+            let lapList = document.getElementById('laps');
+            let lapItem = document.createElement('li');
+            let date = new Date(milliseconds);
+            lapItem.innerHTML = laps.length + '. ' + date.toISOString().substr(11, 8);
+            lapList.appendChild(lapItem);
+        }
+    }
+
+    function reset() {
+        clearInterval(timer);
+        milliseconds = 0;
+        laps = [];
+        displayTime();
+        document.getElementById('laps').innerHTML = '';
+        document.querySelector('button:nth-of-type(1)').innerHTML = 'Start';
+    }
+</script>
+</body>
+</html>
